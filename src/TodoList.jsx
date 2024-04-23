@@ -1,7 +1,7 @@
 import React from 'react'
 import TodoCard from './TodoCard';
 import { v4 as uuid } from 'uuid';
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import data from "./data.json"; //datos iniciales del archivo data.js
 
 function TodoList() {
@@ -13,6 +13,9 @@ function TodoList() {
         tarea: ""
     })
 
+    const tareaRef = useRef(null);//referencia al input tarea
+
+
     const paintCard = () =>
         list.map((card, index) => (
             <TodoCard
@@ -23,9 +26,7 @@ function TodoList() {
         ));
 
     const clearCard = () => setList([]);//vacía la lista -> list=[]
-
     const resetCard = () => setList(data);//resetea la lista ->list=data
-
     const deleteCard = (pos) => { //pos es la posición del array
 
         const remainingItems = list.filter((item, index) => index !== pos);
@@ -35,13 +36,16 @@ function TodoList() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newItem = { id: uuid(), tarea: values.tarea }; // Generamos un ID único para la nueva tarea
+        const tarea = e.target.tarea.value;
+        const newItem = { id: uuid(), tarea }; // Generamos un ID único para la nueva tarea
 
-        const item = { tarea };
         setList([...list, newItem]);
         setValues({ tarea: "" });//Resetea el valor del input a una cadena vacía
-        console.log(item);
         console.log(list);
+        //Probando el uso se useRef
+        console.log(tareaRef.current.value);
+        tareaRef.current.value = "";
+        console.log("********")
     };
 
     const handleChange = (e) => {
@@ -60,16 +64,15 @@ function TodoList() {
 
             <form onSubmit={handleSubmit}>
 
-                <input type="text" name="values.tarea" value="" onChange={handleChange} />
-
+                <input type="text" name="tarea" onChange={handleChange} ref={tareaRef} />
                 {values.tarea ?
                     <button type="submit">Add</button>
                     : null}
 
             </form>
 
-
             {paintCard()}
+
 
         </section>
 
