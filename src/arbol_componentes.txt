@@ -1,0 +1,12 @@
+ARBOL DE COMPONENTES DE MI APP 
+App--> App.jsx
+    Header--> Header.jsx  
+       Logo 
+       Nav
+        Link*3
+        Log Button
+       Main
+         TodoList --> TodoList.jsx
+            TodoCard--> TodoCard.jsx
+            TodoCard--> TodoCard.jsx
+            TodoCard--> TodoCard.jsx
