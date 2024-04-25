@@ -22,11 +22,12 @@ form {
 
 article {
   border-radius: 4px;
+  gap:2px;
   background-image: url("./assets/fondonotasblanco.jpg");
   margin-bottom: 20px;
   display: flex;
   /* Utilizamos flexbox para organizar los elementos */
-  justify-content: space-between;
+  justify-content: space-evenly;
   /* Distribuye los elementos a lo largo del contenedor con el espacio entre ellos */
   align-items: center;
   /* Alinea los elementos verticalmente al centro */
@@ -55,13 +56,31 @@ h4 {
   background-image: url("./assets/fondonotasblanco.jpg");
 }
 
-.check {
+/* .check {
   width: 30px;
   height: 30px;
   margin: 20px;
   border: 4px solid #0fbf12;
+} */
+
+.show {
+  width: 100%;
+  height: 60px;
+  background-color:rgb(167, 91, 104);
+  align-items: center;
+  color:black;
+  font-size: xx-large;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  border:2px solid rgb(51, 50, 50);
+  border-radius: 4px;
 }
 
+.updateCard {
+  width: 50px;
+  background-color: rgb(125, 184, 163);
+}
 
 .logo {
   height: 6em;

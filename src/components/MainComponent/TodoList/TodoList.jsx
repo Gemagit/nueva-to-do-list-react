@@ -8,14 +8,18 @@ import data from "./data.json"; //datos iniciales del archivo data.js
 function TodoList() {
   const unique_id = uuid();//aquí se genera un código único, se actualiza cada vez que se actualiza la página
 
-
   //Estado incicial es list=data --> es decir un array [{}{}{}]
   const [list, setList] = useState(data); //[{}{}{}] lista de Items
-  const [values, setValues] = useState({
-    tarea: ""
-  })
+  const [values, setValues] = useState({ tarea: "" })
   const tareaRef = useRef(null);//referencia al input tarea
+  const [showMessage, setShowMessage] = useState(false);//estado que maneja el mensaje
+  const [editingIndex, setEditingIndex] = useState(null);//estado que maneja el editado de tarjeta
 
+
+  // Limpiar el input de tarea después de 20 segundos
+  setTimeout(() => {
+    setValues({ tarea: '' });
+  }, 8000);
 
 
   const paintCard = () =>
@@ -24,6 +28,7 @@ function TodoList() {
         key={index}
         tarea={card.tarea}
         delete={() => deleteCard(index)}
+        edit={() => setEditingIndex(index)}
       />
     ));
 
@@ -37,27 +42,40 @@ function TodoList() {
   };//borra un item de la lista ->list=data
 
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const tarea = e.target.tarea.value;
+
+    // Validación para que la tarea tenga al menos 6 caracteres
+    if (values.tarea.length < 6) {
+      alert('La tarea debe tener al menos 6 caracteres');
+      return;
+    }
 
     const newItem = { id: uuid(), tarea }; // Generamos un ID único para la nueva tarea
 
     setList([newItem, ...list]);
     setValues({ tarea: "" });//Resetea el valor del input a una cadena vacía
-    setValues({ tarea: "" })
-
-
-    //Probando el uso se useRef
-    console.log(tareaRef.current.value);
     tareaRef.current.value = "";
-    console.log("********")
 
-    // Configurar un temporizador para limpiar el input después de 20 segundos
+
+    // Mensaje de tarea añadida
+    setShowMessage(true);
+
+
+    // se oculta el mensaje después de 5 segundos
     setTimeout(() => {
-      setValues({ tarea: "" });
-    }, 3000);
+      setShowMessage(false);
+    }, 5000);
 
+  };
+
+  const handleEditSubmit = (index, editedTarea) => {
+    const newList = [...list];
+    newList[index].tarea = editedTarea;
+    setList(newList);
+    setEditingIndex(null); // Dejar de editar la tarjeta
   };
 
 
@@ -77,18 +95,25 @@ function TodoList() {
 
 
       <form onSubmit={handleSubmit}>
-
         <label>Añade una nueva tarea:</label>
-        <input type="text" name="tarea" onChange={handleChange} ref={tareaRef} />
+        <input type="text" name="tarea" value={values.tarea} onChange={handleChange} ref={tareaRef} />
         {values.tarea ?
           <button type="submit">Add</button>
           : null}
-
-
       </form>
-      
+
+
+      {showMessage && <div className='show'>¡¡¡Tarea añadida!!!</div>}
+
+      {editingIndex !== null && (
+        <form onSubmit={(e) => {e.preventDefault();handleEditSubmit(editingIndex, e.target.tarea.value);}}>
+          <input type="text" defaultValue={list[editingIndex].tarea} name="tarea"/>
+          <button type="submit">Guardar</button>
+        </form>
+      )}
 
       {paintCard()}
+
 
     </section>
 
