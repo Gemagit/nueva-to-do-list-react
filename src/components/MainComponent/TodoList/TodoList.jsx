@@ -16,12 +16,6 @@ function TodoList() {
   const [editingIndex, setEditingIndex] = useState(null);//estado que maneja el editado de tarjeta
 
 
-  // Limpiar el input de tarea después de 20 segundos
-  setTimeout(() => {
-    setValues({ tarea: '' });
-  }, 8000);
-
-
   const paintCard = () =>
     list.map((card, index) => (
       <TodoCard
@@ -40,6 +34,12 @@ function TodoList() {
     const remainingItems = list.filter((item, index) => index !== pos);
     setList(remainingItems);//esto modifica el estado con lo restante
   };//borra un item de la lista ->list=data
+
+
+    // Limpiar el input de tarea después de 20 segundos
+    setTimeout(() => {
+      setValues({ tarea: '' });
+    }, 10000);
 
 
 
@@ -106,8 +106,8 @@ function TodoList() {
       {showMessage && <div className='show'>¡¡¡Tarea añadida!!!</div>}
 
       {editingIndex !== null && (
-        <form onSubmit={(e) => {e.preventDefault();handleEditSubmit(editingIndex, e.target.tarea.value);}}>
-          <input type="text" defaultValue={list[editingIndex].tarea} name="tarea"/>
+        <form onSubmit={(e) => { e.preventDefault(); handleEditSubmit(editingIndex, e.target.tarea.value); }}>
+          <input type="text" defaultValue={list[editingIndex].tarea} name="tarea" />
           <button type="submit">Guardar</button>
         </form>
       )}
