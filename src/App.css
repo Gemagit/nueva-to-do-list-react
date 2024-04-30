@@ -27,7 +27,7 @@ article {
   margin-bottom: 20px;
   display: flex;
   /* Utilizamos flexbox para organizar los elementos */
-  justify-content: space-evenly;
+  justify-content: space-between;
   /* Distribuye los elementos a lo largo del contenedor con el espacio entre ellos */
   align-items: center;
   /* Alinea los elementos verticalmente al centro */
@@ -80,6 +80,7 @@ h4 {
 .updateCard {
   width: 50px;
   background-color: rgb(125, 184, 163);
+  margin-left: 10px;
 }
 
 .logo {

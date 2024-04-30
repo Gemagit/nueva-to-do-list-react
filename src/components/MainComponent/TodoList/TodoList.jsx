@@ -39,7 +39,7 @@ function TodoList() {
     // Limpiar el input de tarea después de 20 segundos
     setTimeout(() => {
       setValues({ tarea: '' });
-    }, 10000);
+    }, 20000);
 
 
 
